@@ -7,8 +7,7 @@
 <meta name="description" content="Jonatas Valcácio, designer gráfico e diretor de arte em Manaus. Branding, campanhas, experiências de marca e design ambiental.">
 <meta name="theme-color" content="#030807">
 <link rel="icon" href="assets/favicon.svg">
-<link rel="preload" href="assets/fonts/Demo-Medium.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assets/fonts/Demo-Bold.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/Demo-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -26,7 +25,6 @@
   <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
   <div class="grain"></div>
 </div>
-<div class="cursor-light" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <header class="dock-wrap">
@@ -34,55 +32,61 @@
     <a class="dock-brand" href="#top" aria-label="VALK — início"><span>V</span></a>
     <div class="dock-links">
       <span class="dock-pill" aria-hidden="true"></span>
-      <a href="#top" data-nav="top">Início</a>
+      <a href="#sobre" data-nav="sobre">Sobre</a>
       <a href="#projetos" data-nav="projetos">Projetos</a>
-      <a href="#indice" data-nav="indice">Índice</a>
       <a href="#perfil" data-nav="perfil">Perfil</a>
     </div>
-    <a class="dock-cta" href="#contato" data-nav="contato">Contato <b>↗</b></a>
+    <a class="dock-cta" href="#contato" data-nav="contato">Contato</a>
   </nav>
 </header>
 
 <main id="top">
-  <!-- HERO -->
-  <section class="hero shell">
-    <div class="hero-copy">
-      <p class="kicker reveal"><i></i> Designer gráfico · Manaus</p>
-      <h1 class="hero-title" aria-label="Jonatas Valcácio.">
-        <span class="line" data-split>Jonatas</span>
-        <span class="line"><em data-split>Valcácio.</em></span>
+  <!-- HERO: floating work in 3D space -->
+  <section class="hero" id="hero">
+    <div class="space" id="space" aria-hidden="true"></div>
+
+    <div class="hero-center">
+      <a class="badge glass" href="#sobre">
+        <img src="assets/profile/jonatas.webp" alt="" width="64" height="64">
+        <span><b>Jonatas Valcácio</b><small>Designer gráfico · Manaus</small></span>
+        <i class="live" title="Disponível para projetos"></i>
+      </a>
+      <h1 class="hero-title" id="heroTitle" aria-label="Direção de arte que vira experiência.">
+        <span class="line"><span data-split>Direção de arte</span></span>
+        <span class="line"><span data-split>que vira</span> <em class="word-rise">experiência.</em></span>
       </h1>
-      <p class="hero-intro reveal">Direção de arte e design gráfico com <strong>10 anos de mercado</strong>. Identidades, campanhas e experiências visuais construídas com clareza, repertório e impacto.</p>
+      <p class="hero-sub reveal">Identidades, campanhas e espaços com 10 anos de repertório.</p>
       <div class="hero-actions reveal">
-        <a class="btn btn-primary" href="#projetos">Explorar projetos <span>↓</span></a>
-        <a class="btn glass" href="#contato">Vamos conversar</a>
+        <a class="btn btn-primary magnetic" href="#projetos">Ver projetos <span>↓</span></a>
+        <a class="btn glass magnetic" href="#contato">Vamos conversar</a>
       </div>
     </div>
 
-    <figure class="portrait glass tilt reveal">
-      <div class="portrait-img"><img src="assets/profile/jonatas.webp" alt="Jonatas Valcácio" width="1600" height="1505"></div>
-      <figcaption>
-        <span>Direção de arte</span>
-        <span>Manaus · AM</span>
-      </figcaption>
-      <div class="status glass"><i></i> Disponível para projetos</div>
-      <span class="shine" aria-hidden="true"></span>
-    </figure>
+    <div class="lens" id="lens" aria-hidden="true"><div class="lens-inner" id="lensInner"></div></div>
+    <p class="hero-foot" aria-hidden="true"><span>Portfólio · 2026</span><span class="scroll-line"></span><span>Role para explorar</span></p>
+  </section>
 
-    <ul class="hero-stats reveal" aria-label="Resumo">
-      <li class="glass"><b data-count="10">10</b><span>anos de mercado</span></li>
-      <li class="glass"><b data-count="6">6</b><span>cases selecionados</span></li>
-      <li class="glass"><b>AM</b><span>29 anos · Manaus</span></li>
-    </ul>
-    <a class="scroll-cue" href="#projetos" aria-label="Rolar para projetos"><span></span></a>
+  <!-- MANIFESTO: scroll-scrubbed text -->
+  <section class="manifesto" id="sobre">
+    <div class="manifesto-sticky shell">
+      <figure class="mini-portrait glass reveal">
+        <img src="assets/profile/jonatas.webp" alt="Jonatas Valcácio" width="1600" height="1505">
+        <figcaption><b>Jonatas Valcácio</b><span>29 anos · Manaus, AM</span></figcaption>
+      </figure>
+      <p class="scrub" id="scrub">Há dez anos eu transformo ideias em sistemas visuais. Identidades, campanhas e experiências construídas com clareza, repertório e impacto, do conceito à última aplicação.</p>
+      <ul class="facts">
+        <li><b data-count="10">10</b><span>anos de mercado</span></li>
+        <li><b data-count="6">6</b><span>cases selecionados</span></li>
+        <li><b data-count="3">3</b><span>empresas na trajetória</span></li>
+      </ul>
+    </div>
   </section>
 
   <!-- PROJECTS: 3D RING -->
   <section class="projects" id="projetos">
     <div class="shell section-head reveal">
-      <p class="eyebrow">Trabalhos selecionados · 6 cases</p>
-      <h2>Direção <em>&amp;</em> identidade.</h2>
-      <p class="lede">Arraste para girar a galeria. Toque no projeto em destaque para abrir o case completo.</p>
+      <p class="eyebrow">Trabalhos selecionados</p>
+      <h2>Seis projetos.<br><em>Uma mesma atenção ao sistema.</em></h2>
     </div>
 
     <div class="ring-stage" id="ringStage" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Galeria de projetos. Use as setas para navegar e Enter para abrir.">
@@ -96,7 +100,7 @@
         <div class="ring-meta"><span id="riNum">01 / 06</span><span id="riCat">Branding &amp; Beauty</span></div>
         <h3 id="riTitle">Verus</h3>
         <p id="riStatement">Beleza verdadeira é aquela que permanece.</p>
-        <button class="btn btn-primary btn-sm" id="openBtn">Ver case completo <span>↗</span></button>
+        <button class="btn btn-primary btn-sm" id="openBtn">Abrir case <span>↗</span></button>
       </div>
       <button class="round glass" id="nextBtn" aria-label="Próximo projeto">→</button>
     </div>
@@ -104,51 +108,25 @@
     <p class="drag-hint" aria-hidden="true"><span>⟵</span> clique e arraste <span>⟶</span></p>
   </section>
 
-  <!-- INDEX -->
-  <section class="index shell" id="indice">
-    <div class="section-head reveal">
-      <p class="eyebrow">Navegação</p>
-      <h2>Índice.</h2>
-      <p class="lede">Uma leitura do repertório, do conceito à aplicação.</p>
-    </div>
-    <ol class="chapters">
-      <li class="reveal"><a class="chapter glass" href="#projetos" data-goto="0"><span class="ch-n">01</span><span class="ch-t">Identidade &amp; Branding</span><span class="ch-c">03 cases</span><span class="ch-a">↘</span></a></li>
-      <li class="reveal"><a class="chapter glass" href="#projetos" data-goto="1"><span class="ch-n">02</span><span class="ch-t">Campanhas &amp; Experiências</span><span class="ch-c">02 cases</span><span class="ch-a">↘</span></a></li>
-      <li class="reveal"><a class="chapter glass" href="#projetos" data-goto="5"><span class="ch-n">03</span><span class="ch-t">Design Ambiental</span><span class="ch-c">01 case</span><span class="ch-a">↘</span></a></li>
-      <li class="reveal"><a class="chapter glass" href="#arquivo"><span class="ch-n">04</span><span class="ch-t">Arquivo expandido</span><span class="ch-c">Social · 3D · IA</span><span class="ch-a">↘</span></a></li>
-      <li class="reveal"><a class="chapter glass" href="#perfil"><span class="ch-n">05</span><span class="ch-t">Perfil &amp; trajetória</span><span class="ch-c">10 anos</span><span class="ch-a">↘</span></a></li>
-    </ol>
-  </section>
-
   <!-- ARCHIVE -->
   <section class="archive" id="arquivo">
-    <div class="shell section-head reveal">
-      <p class="eyebrow">Arquivo expandido</p>
-      <h2>Além dos cases.</h2>
-      <p class="lede">Frentes que também fazem parte do meu repertório e do dia a dia criativo.</p>
-    </div>
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Social media</span><i>●</i><span>Campanhas de varejo</span><i>●</i><span>Manipulação de imagem</span><i>●</i><span>Motion design</span><i>●</i><span>Modelagem 3D</span><i>●</i><span>Produção com IA</span><i>●</i>
-        <span>Social media</span><i>●</i><span>Campanhas de varejo</span><i>●</i><span>Manipulação de imagem</span><i>●</i><span>Motion design</span><i>●</i><span>Modelagem 3D</span><i>●</i><span>Produção com IA</span><i>●</i>
+        <span>Social media</span><i>✦</i><span>Campanhas de varejo</span><i>✦</i><span>Manipulação de imagem</span><i>✦</i><span>Motion design</span><i>✦</i><span>Modelagem 3D</span><i>✦</i><span>Produção com IA</span><i>✦</i>
+        <span>Social media</span><i>✦</i><span>Campanhas de varejo</span><i>✦</i><span>Manipulação de imagem</span><i>✦</i><span>Motion design</span><i>✦</i><span>Modelagem 3D</span><i>✦</i><span>Produção com IA</span><i>✦</i>
       </div>
     </div>
-    <ul class="shell chips">
-      <li class="glass reveal">Social media</li>
-      <li class="glass reveal">Campanhas de varejo</li>
-      <li class="glass reveal">Manipulação de imagem</li>
-      <li class="glass reveal">Motion design</li>
-      <li class="glass reveal">Modelagem 3D</li>
-      <li class="glass reveal">Produção com IA</li>
-    </ul>
+    <div class="shell archive-copy reveal">
+      <p class="eyebrow">Além dos cases</p>
+      <p class="archive-lede">Frentes que também fazem parte do meu repertório e do dia a dia criativo: social media, varejo, manipulação de imagem, motion, 3D e produção com IA.</p>
+    </div>
   </section>
 
   <!-- PROFILE BENTO -->
   <section class="profile shell" id="perfil">
     <div class="section-head reveal">
       <p class="eyebrow">Perfil profissional</p>
-      <h2>Experiência prática, <em>repertório amplo.</em></h2>
-      <p class="lede">Competências, ferramentas e formação em uma leitura direta.</p>
+      <h2>Experiência prática,<br><em>repertório amplo.</em></h2>
     </div>
 
     <div class="bento">
@@ -165,7 +143,6 @@
 
       <article class="card glass tilt reveal b-tools">
         <h3 class="card-label">Ferramentas</h3>
-        <p class="card-sub">Meu fluxo criativo.</p>
         <ul class="tools">
           <li style="--c:#31a8ff"><b>Ps</b><span>Photoshop</span></li>
           <li style="--c:#ff9a00"><b>Ai</b><span>Illustrator</span></li>
@@ -188,8 +165,7 @@
 
       <article class="card glass tilt reveal b-edu">
         <h3 class="card-label">Formação &amp; estudos</h3>
-        <p class="edu-main">Design Gráfico</p>
-        <p class="card-sub">Ensino Superior · Uninorte</p>
+        <p class="edu-main">Design Gráfico <small>Ensino Superior · Uninorte</small></p>
         <ul class="edu-list">
           <li>UX/UI Design</li><li>Modelagem 3D</li><li>Relações Humanas e Sinergia</li><li>Excelência no Atendimento</li><li>Inglês Intermediário</li>
         </ul>
@@ -199,25 +175,27 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact shell" id="contato">
-    <div class="contact-card glass reveal">
-      <p class="eyebrow">Contato &amp; disponibilidade</p>
-      <h2>Vamos criar <em>algo juntos?</em></h2>
-      <div class="contact-grid">
-        <a class="c-item glass" href="mailto:valcaciodesign@gmail.com"><small>E-mail</small><b>valcaciodesign@gmail.com</b><span>↗</span></a>
-        <a class="c-item glass" href="https://www.behance.net/jonatasvalccio" target="_blank" rel="noopener"><small>Behance</small><b>jonatasvalccio</b><span>↗</span></a>
-        <a class="c-item glass" href="https://www.instagram.com/valk.designer" target="_blank" rel="noopener"><small>Instagram</small><b>@valk.designer</b><span>↗</span></a>
-        <a class="c-item glass" href="tel:+5592981756627"><small>Telefone</small><b>+55 92 98175-6627</b><span>↗</span></a>
+  <section class="contact" id="contato">
+    <div class="contact-orb" aria-hidden="true"></div>
+    <div class="shell contact-inner">
+      <p class="eyebrow reveal">Contato &amp; disponibilidade</p>
+      <h2 class="contact-title reveal">Vamos criar<br><em>algo juntos?</em></h2>
+      <button class="mail-pill glass magnetic reveal" id="copyEmail" type="button" aria-label="Copiar e-mail valcaciodesign@gmail.com">
+        <span>valcaciodesign@gmail.com</span><i>Copiar</i>
+      </button>
+      <div class="contact-links reveal">
+        <a class="glass" href="https://www.behance.net/jonatasvalccio" target="_blank" rel="noopener">Behance <span>↗</span></a>
+        <a class="glass" href="https://www.instagram.com/valk.designer" target="_blank" rel="noopener">Instagram <span>↗</span></a>
+        <a class="glass" href="tel:+5592981756627">+55 92 98175-6627</a>
+        <a class="glass" href="mailto:valcaciodesign@gmail.com">E-mail <span>↗</span></a>
       </div>
-      <button class="btn btn-primary copy-btn" id="copyEmail" type="button">Copiar e-mail <span>＋</span></button>
     </div>
+    <footer class="footer shell">
+      <span>VALK · Jonatas Valcácio</span>
+      <span>Portfólio 2026</span>
+      <a href="#top">Voltar ao topo ↑</a>
+    </footer>
   </section>
-
-  <footer class="footer shell">
-    <a class="dock-brand" href="#top" aria-label="Voltar ao topo"><span>V</span></a>
-    <p>Jonatas Valcácio · Portfólio 2026</p>
-    <a href="#top">Voltar ao topo ↑</a>
-  </footer>
 </main>
 
 <!-- PROJECT SHEET -->

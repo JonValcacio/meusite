@@ -44,13 +44,19 @@
   } catch (e) {}
 
   /* ---------- Hero split text ---------- */
+  let charN = 0;
   $$('[data-split]').forEach(el => {
-    const t = el.textContent; el.textContent = '';
-    [...t].forEach((ch, i) => {
-      const s = document.createElement('span');
-      s.className = 'char'; s.textContent = ch;
-      s.style.transitionDelay = (0.15 + i * 0.045 + (el.tagName === 'EM' ? 0.25 : 0)) + 's';
-      el.appendChild(s);
+    const words = el.textContent.split(' '); el.textContent = '';
+    words.forEach((wd, wi) => {
+      const w = document.createElement('span'); w.className = 'word';
+      [...wd].forEach(ch => {
+        const s = document.createElement('span');
+        s.className = 'char'; s.textContent = ch;
+        s.style.transitionDelay = (0.1 + (charN++) * 0.03) + 's';
+        w.appendChild(s);
+      });
+      el.appendChild(w);
+      if (wi < words.length - 1) el.appendChild(document.createTextNode(' '));
     });
   });
   requestAnimationFrame(() => setTimeout(() => $('.hero-title').classList.add('is-in'), 60));
@@ -78,9 +84,7 @@
     o.observe(el);
   });
 
-  /* ---------- Cursor light, scroll progress, dock hide ---------- */
-  const cl = $('.cursor-light');
-  addEventListener('pointermove', e => { cl.style.setProperty('--cx', e.clientX + 'px'); cl.style.setProperty('--cy', e.clientY + 'px'); }, { passive: true });
+  /* ---------- Scroll progress, dock hide ---------- */
   const dockWrap = $('.dock-wrap');
   let lastY = scrollY;
   const onScroll = () => {
@@ -89,8 +93,125 @@
     const y = scrollY;
     if (!sheetOpen) dockWrap.classList.toggle('is-hidden', y > lastY && y > 400);
     lastY = y;
+    heroKick(); scrub();
   };
   addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---------- HERO: work floating in 3D space ---------- */
+  const hero = $('#hero'), space = $('#space'), heroCenter = $('.hero-center');
+  const world = document.createElement('div'); world.className = 'space-world'; space.appendChild(world);
+  const T = [ // [projectIndex, imageIndex, fx, fy, z, w]
+    [0, 0, -0.36, -0.27, -150, 300], [1, 0, 0.35, -0.29, -300, 320], [2, 0, -0.40, 0.27, -80, 290], [3, 0, 0.39, 0.29, -120, 300],
+    [4, 0, -0.13, -0.40, -700, 270], [5, 0, 0.15, 0.41, -650, 290], [0, 3, -0.31, 0.01, -950, 300], [2, 3, 0.31, 0.0, -1000, 320],
+    [1, 2, 0.02, -0.37, -1350, 280], [3, 5, -0.04, 0.39, -1250, 270], [4, 3, -0.49, -0.04, -480, 240], [5, 1, 0.50, -0.07, -560, 250],
+  ];
+  const tiles = T.map(([pi, ii, fx, fy, z, w], k) => {
+    const p = projects[pi];
+    const el = document.createElement('div');
+    el.className = 'tile';
+    el.innerHTML = `<div class="tile-in glass"><img src="${p.images[ii] || p.images[0]}" alt="" loading="${k < 6 ? 'eager' : 'lazy'}" draggable="false"></div>`;
+    const inner = el.firstChild;
+    inner.style.setProperty('--dur', (7 + (k % 5) * 1.3) + 's');
+    inner.style.setProperty('--del', (-k * 1.7) + 's');
+    const depth = Math.max(0, (-z - 500) / 260);
+    inner.style.filter = `blur(${depth.toFixed(2)}px) brightness(${(1 - Math.min(0.45, -z / 2600)).toFixed(2)})`;
+    el.addEventListener('click', () => openSheet(pi));
+    world.appendChild(el);
+    return { el, fx, fy, z, w };
+  });
+  const layoutTiles = () => {
+    const W = innerWidth, H = innerHeight, small = W < 700;
+    tiles.forEach(t => {
+      const k = (1000 - t.z) / 1000; // keep screen position independent of depth
+      t.x = t.fx * W * k * (small ? 1.25 : 1); t.y = t.fy * H * k;
+      t.el.style.setProperty('--w', (t.w * (small ? 0.5 : W < 1100 ? 0.75 : 1)) + 'px');
+    });
+  };
+  let mx = 0, my = 0, cmx = 0, cmy = 0, hp = 0, chp = 0, heroRaf = 0;
+  const heroFrame = () => {
+    cmx += (mx - cmx) * 0.06; cmy += (my - cmy) * 0.06; chp += (hp - chp) * 0.12;
+    const zPush = chp * 1100;
+    world.style.transform = `translateZ(${zPush.toFixed(1)}px) rotateY(${(cmx * 7).toFixed(3)}deg) rotateX(${(-cmy * 5).toFixed(3)}deg)`;
+    for (const t of tiles) {
+      const ez = t.z + zPush;
+      const op = ez < 350 ? 1 : Math.max(0, 1 - (ez - 350) / 400);
+      t.el.style.transform = `translate3d(${t.x.toFixed(1)}px,${t.y.toFixed(1)}px,${t.z}px) translate(-50%,-50%)`;
+      t.el.style.opacity = op.toFixed(3);
+      t.el.style.visibility = op < 0.01 ? 'hidden' : 'visible';
+    }
+    const q = Math.min(1, chp * 1.7);
+    heroCenter.style.opacity = (1 - q).toFixed(3);
+    heroCenter.style.transform = `translateY(${(-q * 60).toFixed(1)}px) scale(${(1 - q * 0.08).toFixed(4)})`;
+    heroCenter.style.filter = q > 0.01 ? `blur(${(q * 10).toFixed(1)}px)` : '';
+    if (Math.abs(mx - cmx) > 0.001 || Math.abs(my - cmy) > 0.001 || Math.abs(hp - chp) > 0.0005) heroRaf = requestAnimationFrame(heroFrame);
+    else heroRaf = 0;
+  };
+  function heroKick() {
+    const r = hero.getBoundingClientRect();
+    hp = reduce ? 0 : Math.min(1, Math.max(0, -r.top / (r.height * 0.9)));
+    if (!heroRaf && r.bottom > 0) heroRaf = requestAnimationFrame(heroFrame);
+  }
+  if (!reduce) addEventListener('pointermove', e => {
+    mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; heroKick();
+  }, { passive: true });
+  addEventListener('resize', () => { layoutTiles(); heroKick(); });
+  layoutTiles(); heroKick();
+
+  /* ---------- Glass lens over hero (desktop) ---------- */
+  const lens = $('#lens'), lensInner = $('#lensInner');
+  if (matchMedia('(hover:hover)').matches && !reduce) {
+    const clone = heroCenter.cloneNode(true);
+    clone.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+    clone.querySelector('.hero-title').classList.add('is-in');
+    lensInner.appendChild(clone);
+    const R = 110, S = 1.45;
+    let lx = 0, ly = 0, tx = 0, ty = 0, lensRaf = 0, inHero = false;
+    const sizeInner = () => { lensInner.style.width = hero.offsetWidth + 'px'; lensInner.style.height = hero.offsetHeight + 'px'; };
+    const lensFrame = () => {
+      lx += (tx - lx) * 0.18; ly += (ty - ly) * 0.18;
+      lens.style.transform = `translate(${(lx - R).toFixed(1)}px,${(ly - R).toFixed(1)}px)`;
+      lensInner.style.transform = `translate(${(R - lx * S).toFixed(1)}px,${(R - ly * S).toFixed(1)}px) scale(${S})`;
+      clone.style.opacity = heroCenter.style.opacity;
+      lens.style.opacity = inHero && (+heroCenter.style.opacity || 1) > 0.5 ? '' : '0';
+      if (Math.abs(tx - lx) > 0.2 || Math.abs(ty - ly) > 0.2) lensRaf = requestAnimationFrame(lensFrame); else lensRaf = 0;
+    };
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      tx = e.clientX - r.left; ty = e.clientY - r.top;
+      if (!inHero) { inHero = true; lx = tx; ly = ty; sizeInner(); lens.classList.add('is-on'); }
+      if (!lensRaf) lensRaf = requestAnimationFrame(lensFrame);
+    });
+    hero.addEventListener('pointerleave', () => { inHero = false; lens.classList.remove('is-on'); });
+    addEventListener('resize', sizeInner);
+  }
+
+  /* ---------- Manifesto scroll-scrub ---------- */
+  const scrubEl = $('#scrub'), manifesto = $('#sobre');
+  const HL = ['dez', 'anos', 'sistemas', 'visuais.', 'impacto,'];
+  scrubEl.innerHTML = scrubEl.textContent.trim().split(/\s+/).map(w => `<span class="w${HL.includes(w) ? ' hl' : ''}">${w}</span>`).join(' ');
+  const words = $$('.w', scrubEl);
+  let lastOn = -1;
+  function scrub() {
+    const r = manifesto.getBoundingClientRect();
+    const total = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, (-r.top + innerHeight * 0.35) / (total + innerHeight * 0.1)));
+    const on = reduce ? words.length : Math.round(p * words.length * 1.1);
+    if (on === lastOn) return; lastOn = on;
+    words.forEach((w, i) => w.classList.toggle('on', i < on));
+  }
+  scrub();
+
+  /* ---------- Magnetic buttons ---------- */
+  if (matchMedia('(hover:hover)').matches && !reduce) {
+    $$('.magnetic').forEach(el => {
+      el.style.transition = 'transform .45s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,background .3s,translate .5s cubic-bezier(.34,1.56,.64,1)';
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.translate = `${((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1)}px ${((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1)}px`;
+      });
+      el.addEventListener('pointerleave', () => { el.style.translate = '0 0'; });
+    });
+  }
 
   /* ---------- Dock active pill ---------- */
   const pill = $('.dock-pill');
@@ -100,11 +221,11 @@
     pill.style.opacity = 1; pill.style.width = a.offsetWidth + 'px';
     pill.style.transform = `translateX(${a.offsetLeft}px)`;
   };
-  const sections = ['top', 'projetos', 'indice', 'arquivo', 'perfil', 'contato'].map(id => document.getElementById(id));
+  const sections = ['hero', 'sobre', 'projetos', 'arquivo', 'perfil', 'contato'].map(id => document.getElementById(id));
   const sio = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      let id = e.target.id; if (id === 'arquivo') id = 'indice';
+      let id = e.target.id; if (id === 'arquivo') id = 'projetos';
       navLinks.forEach(a => a.classList.toggle('is-active', a.dataset.nav === id));
       movePill(navLinks.find(a => a.dataset.nav === id));
     });
@@ -286,7 +407,6 @@
   }, 4200);
 
   // index chapters jump to project
-  $$('[data-goto]').forEach(a => a.addEventListener('click', () => setTimeout(() => goTo(+a.dataset.goto), 450)));
 
   addEventListener('resize', layout);
   layout();
