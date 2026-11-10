@@ -191,7 +191,7 @@ h2{font-size:clamp(40px,6.4vw,96px)}
 .ring-card{position:absolute;left:calc(var(--cw) / -2);top:0;width:var(--cw);will-change:transform,opacity;-webkit-tap-highlight-color:transparent}
 .rc-frame{position:relative;border-radius:26px;padding:8px;overflow:hidden;transition:box-shadow .5s}
 .rc-img{position:relative;border-radius:19px;overflow:hidden;aspect-ratio:16/11;background:var(--ink-2)}
-.rc-img img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;transform:scale(calc(1.12 - var(--f,0) * .08)) translateX(calc(var(--rel,0) * -14px))}
+.rc-img img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;will-change:transform}
 .rc-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(3,8,7,.75))}
 .rc-tag{position:absolute;left:20px;bottom:18px;right:20px;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:10px}
 .rc-tag b{font-size:clamp(22px,2.6vw,32px);font-weight:300;letter-spacing:-.03em;line-height:1}
@@ -201,7 +201,7 @@ h2{font-size:clamp(40px,6.4vw,96px)}
 .ring-card.is-front .rc-open{transform:scale(1)}
 .ring-card.is-front .rc-frame{box-shadow:0 40px 90px -30px var(--ac,var(--aqua)),inset 0 1px 0 rgba(255,255,255,.25)}
 .rc-reflect{position:absolute;left:8px;right:8px;top:100%;height:60%;margin-top:10px;border-radius:19px;overflow:hidden;opacity:.22;transform:scaleY(-1);-webkit-mask:linear-gradient(to top,rgba(0,0,0,.9),transparent 55%);mask:linear-gradient(to top,rgba(0,0,0,.9),transparent 55%);pointer-events:none}
-.rc-reflect img{width:100%;height:auto;aspect-ratio:16/11;object-fit:cover;filter:blur(2px)}
+.rc-reflect img{width:100%;height:auto;aspect-ratio:16/11;object-fit:cover}
 .ring-floor{position:absolute;left:50%;top:calc(var(--cw) * .55);width:140%;height:320px;transform:translateX(-50%);background:radial-gradient(40% 45% at 50% 35%,color-mix(in srgb,var(--accent) 20%,transparent),transparent 75%);transition:background 1s;pointer-events:none}
 .ring-hud{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,48px);margin-top:10px}
 .ring-info{text-align:center;max-width:520px;min-width:0;flex:1}
@@ -470,6 +470,20 @@ h2{font-size:clamp(40px,6.4vw,96px)}
 .lb-count{position:absolute;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));margin:0;text-align:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);pointer-events:none}
 @media (max-width:700px){
   .lb-prev,.lb-next{top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));margin:0;width:46px;height:46px}
+}
+
+/* ---------- performance: no backdrop blur inside 3D scenes ---------- */
+.rc-frame,.rc-chip,.tile-in{-webkit-backdrop-filter:none;backdrop-filter:none}
+.rc-frame{background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05) 45%,rgba(255,255,255,.09))}
+.rc-chip{background:rgba(3,8,7,.55)}
+.tile-in{background:rgba(255,255,255,.1)}
+.rc-dim{position:absolute;inset:0;z-index:3;border-radius:inherit;background:var(--ink);opacity:0;pointer-events:none;will-change:opacity}
+.ring-card{backface-visibility:hidden}
+@media (hover:none){
+  .blob{animation:none;mix-blend-mode:normal}
+  .hero-title em,h2 em,.contact-title em{animation:none}
+  .glass{-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+  .rc-frame,.rc-chip,.tile-in{-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 
 @media (prefers-reduced-motion:reduce){

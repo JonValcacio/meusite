@@ -33,6 +33,8 @@
       description: 'Mural corporativo que organiza visão, valores, estratégia e propósito como uma jornada contínua, conectando o universo do ciclismo à cultura organizacional.',
       accent: '#ed1c24', cover: `${BASE}projects/caloi/mural-aplicado.webp`, images: P('caloi', ['mural-aplicado', 'angulo-conceitual', 'detalhe-mural'], 'webp') },
   ];
+  // miniaturas leves (800px) para a galeria 3D e a abertura; as imagens cheias ficam para o case
+  const thumb = src => src.replace(`${BASE}projects/`, `${BASE}thumbs/`).replace(/\.\w+$/, '.jpg');
   const N = projects.length;
   const pad = n => String(n).padStart(2, '0');
   const mod = (a, n) => ((a % n) + n) % n;
@@ -40,7 +42,7 @@
   /* ---------- Liquid refraction where supported (Chromium) ---------- */
   try {
     const brands = navigator.userAgentData && navigator.userAgentData.brands;
-    if (brands && brands.some(b => /Chromium/.test(b.brand))) root.classList.add('liquid-ok');
+    if (brands && brands.some(b => /Chromium/.test(b.brand)) && matchMedia('(hover:hover)').matches) root.classList.add('liquid-ok');
   } catch (e) {}
 
   /* ---------- Hero split text ---------- */
@@ -109,7 +111,7 @@
     const p = projects[pi];
     const el = document.createElement('div');
     el.className = 'tile';
-    el.innerHTML = `<div class="tile-in glass"><img src="${ii ? p.images[ii] || p.cover : p.cover}" alt="" loading="${k < 6 ? 'eager' : 'lazy'}" draggable="false"></div>`;
+    el.innerHTML = `<div class="tile-in glass"><img src="${thumb(ii ? p.images[ii] || p.cover : p.cover)}" alt="" loading="${k < 6 ? 'eager' : 'lazy'}" draggable="false"></div>`;
     const inner = el.firstChild;
     inner.style.setProperty('--dur', (7 + (k % 5) * 1.3) + 's');
     inner.style.setProperty('--del', (-k * 1.7) + 's');
@@ -257,12 +259,13 @@
     c.style.setProperty('--ac', p.accent);
     c.innerHTML = `
       <div class="rc-frame glass">
-        <div class="rc-img"><img src="${p.cover}" alt="${p.title}" draggable="false" loading="${i < 3 ? 'eager' : 'lazy'}"></div>
+        <div class="rc-img"><img src="${thumb(p.cover)}" alt="${p.title}" draggable="false" loading="${i < 3 ? 'eager' : 'lazy'}"></div>
         <span class="rc-chip glass">${p.chapter} · ${p.year}</span>
         <span class="rc-open" aria-hidden="true">↗</span>
+        <i class="rc-dim" aria-hidden="true"></i>
         <div class="rc-tag"><b>${p.title}</b><small>${pad(i + 1)} / ${pad(N)}</small></div>
       </div>
-      <div class="rc-reflect" aria-hidden="true"><img src="${p.cover}" alt="" draggable="false" loading="lazy"></div>`;
+      <div class="rc-reflect" aria-hidden="true"><img src="${thumb(p.cover)}" alt="" draggable="false" loading="lazy"></div>`;
     ring.appendChild(c);
     const d = document.createElement('button');
     d.setAttribute('role', 'tab'); d.setAttribute('aria-label', p.title);
@@ -271,6 +274,7 @@
     return c;
   });
 
+  const parts = cards.map(c => ({ dim: $('.rc-dim', c), img: $('.rc-img img', c) }));
   let pos = 0, vel = 0, target = 0, R = 800, STEP = 34, cw = 460, pxPer = 400;
   const layout = () => {
     cw = cards[0].offsetWidth || 460;
@@ -292,11 +296,11 @@
       const c = cards[i];
       c.style.transform = `rotateY(${rel * STEP}deg) translateZ(${R}px)`;
       c.style.opacity = op.toFixed(3);
-      c.style.filter = `brightness(${(1 - Math.min(a, 2) * 0.28).toFixed(3)}) saturate(${(1 - Math.min(a, 2) * 0.2).toFixed(3)})`;
+      c.style.visibility = op < 0.01 ? 'hidden' : 'visible';
+      parts[i].dim.style.opacity = (Math.min(a, 2) * 0.3).toFixed(3);
+      parts[i].img.style.transform = `scale(${(1.12 - Math.max(0, 1 - a) * 0.08).toFixed(4)}) translateX(${(Math.max(-2, Math.min(2, rel)) * -14).toFixed(1)}px)`;
       c.style.zIndex = String(100 - Math.round(a * 10));
       c.style.pointerEvents = op < 0.2 ? 'none' : 'auto';
-      c.style.setProperty('--f', Math.max(0, 1 - a).toFixed(3));
-      c.style.setProperty('--rel', Math.max(-2, Math.min(2, rel)).toFixed(3));
     }
     const f = mod(Math.round(pos), N);
     if (f !== front || force) setFront(f);
