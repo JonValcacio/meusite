@@ -672,6 +672,22 @@
     size();
   }
 
+  /* ---------- Plans: expand / collapse ---------- */
+  {
+    const tg = $('#plansToggle'), body = $('#plansBody'), label = $('b', tg);
+    let doneT = 0;
+    const setPlans = open => {
+      tg.setAttribute('aria-expanded', open);
+      label.textContent = open ? 'Fechar pacotes' : 'Ver pacotes e valores';
+      clearTimeout(doneT); body.classList.remove('is-done');
+      body.classList.toggle('is-open', open);
+      if (open) doneT = setTimeout(() => body.classList.add('is-done'), 850); // libera o brilho dos cartões
+    };
+    tg.addEventListener('click', () => setPlans(tg.getAttribute('aria-expanded') !== 'true'));
+    $$('a[href="#pacotes"]').forEach(a => a.addEventListener('click', () => setPlans(true)));
+    if (location.hash === '#pacotes') setPlans(true);
+  }
+
   /* ---------- Copy e-mail ---------- */
   const toast = $('#toast'); let tt = 0;
   const say = m => { toast.textContent = m; toast.classList.add('is-on'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('is-on'), 2200); };
