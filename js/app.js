@@ -11,27 +11,27 @@
     { id: 'verus', title: 'Verus', category: 'Branding & Beauty', chapter: 'Identidade', year: '2026',
       role: 'Estratégia · Identidade · Direção de arte', statement: 'Beleza verdadeira é aquela que permanece.',
       description: 'Uma identidade premium construída para transformar verdade, cuidado e permanência em uma linguagem visual sofisticada — do símbolo às embalagens e aplicações de campanha.',
-      accent: '#c29a5c', images: P('verus', ['01', '07', '09', '19', '23', '24', '27', '33']) },
+      accent: '#c29a5c', cover: `${BASE}projects/verus/01.jpg`, images: P('verus', ['07', '09', '01', '19', '27', '33', '23', '24']) },
     { id: 'convencao', title: 'Convenção Rodrigues', category: 'Brand Experience', chapter: 'Experiência', year: '2026',
       role: 'Key visual · Ambientação · Desdobramentos', statement: 'Performance é hábito. Cultura é identidade.',
       description: 'Sistema visual para uma convenção de grande escala, conectando energia, performance e cultura em credenciamento, palco, sinalização, uniformes e comunicação digital.',
-      accent: '#ff29bd', images: P('convencao', ['04', '05', '06', '07', '09']) },
+      accent: '#ff29bd', cover: `${BASE}projects/convencao/04.jpg`, images: P('convencao', ['04', '05', '06', '07', '09']) },
     { id: 'parintins', title: 'Parintins', category: 'Campanha 360º', chapter: 'Campanha', year: '2026',
       role: 'Conceito · KV · Identidade regional', statement: 'Conforto que emociona.',
       description: 'Uma campanha que traduz a potência cultural de Parintins para o varejo, equilibrando o azul e o vermelho em peças, ambientes e brindes com presença regional.',
-      accent: '#237bff', images: P('parintins', ['01', '02', '03', '05', '06', '09', '10', '11', '12']) },
+      accent: '#237bff', cover: `${BASE}projects/parintins/01.jpg`, images: P('parintins', ['01', '02', '03', '05', '06', '10', '11', '12', '09']) },
     { id: 'bravolt', title: 'Bravolt', category: 'Branding & Retail', chapter: 'Varejo', year: '2025',
       role: 'Identidade · Embalagens · Campanha', statement: 'Mais conforto. Mais economia.',
       description: 'Uma marca direta, tecnológica e acessível para o varejo de eletro, com um sistema que ganha escala em embalagens, mídia externa, uniformes, digital e produtos.',
-      accent: '#17cbd0', images: P('bravolt', ['01', '02', '03', '09', '11', '20', '23', '29', '35']) },
+      accent: '#17cbd0', cover: `${BASE}projects/bravolt/01.jpg`, images: P('bravolt', ['01', '02', '03', '11', '23', '29', '35', '20', '09']) },
     { id: 'feijao', title: 'Feijão Autoposto', category: 'Identidade & Experiência', chapter: 'Identidade', year: 'Case',
       role: 'Identidade · Mascote · Uniformes', statement: 'Uma marca próxima, energética e feita para movimentar.',
       description: 'Sistema visual para um autoposto com forte presença popular, combinando vermelho, amarelo e personalidade — da fachada aos uniformes e ao mascote.',
-      accent: '#ffcd05', images: P('feijao', ['fachada', 'corredor', 'manga-longa', 'logo-colorida', 'logo-vermelho-branco', 'logo-vermelho-amarelo', 'logo-amarelo-vermelho', 'equipe'], 'webp') },
+      accent: '#ffcd05', cover: `${BASE}projects/feijao/fachada.webp`, images: P('feijao', ['logo-colorida', 'logo-vermelho-branco', 'logo-vermelho-amarelo', 'logo-amarelo-vermelho', 'fachada', 'equipe', 'corredor', 'manga-longa'], 'webp') },
     { id: 'caloi', title: 'Caloi', category: 'Design Ambiental', chapter: 'Institucional', year: 'Case',
       role: 'Mural · Comunicação interna · Ambientação', statement: 'Cultura e propósito transformados em percurso visual.',
       description: 'Mural corporativo que organiza visão, valores, estratégia e propósito como uma jornada contínua, conectando o universo do ciclismo à cultura organizacional.',
-      accent: '#ed1c24', images: P('caloi', ['mural-aplicado', 'detalhe-mural', 'angulo-conceitual'], 'webp') },
+      accent: '#ed1c24', cover: `${BASE}projects/caloi/mural-aplicado.webp`, images: P('caloi', ['mural-aplicado', 'angulo-conceitual', 'detalhe-mural'], 'webp') },
   ];
   const N = projects.length;
   const pad = n => String(n).padStart(2, '0');
@@ -109,7 +109,7 @@
     const p = projects[pi];
     const el = document.createElement('div');
     el.className = 'tile';
-    el.innerHTML = `<div class="tile-in glass"><img src="${p.images[ii] || p.images[0]}" alt="" loading="${k < 6 ? 'eager' : 'lazy'}" draggable="false"></div>`;
+    el.innerHTML = `<div class="tile-in glass"><img src="${ii ? p.images[ii] || p.cover : p.cover}" alt="" loading="${k < 6 ? 'eager' : 'lazy'}" draggable="false"></div>`;
     const inner = el.firstChild;
     inner.style.setProperty('--dur', (7 + (k % 5) * 1.3) + 's');
     inner.style.setProperty('--del', (-k * 1.7) + 's');
@@ -257,12 +257,12 @@
     c.style.setProperty('--ac', p.accent);
     c.innerHTML = `
       <div class="rc-frame glass">
-        <div class="rc-img"><img src="${p.images[0]}" alt="${p.title}" draggable="false" loading="${i < 3 ? 'eager' : 'lazy'}"></div>
+        <div class="rc-img"><img src="${p.cover}" alt="${p.title}" draggable="false" loading="${i < 3 ? 'eager' : 'lazy'}"></div>
         <span class="rc-chip glass">${p.chapter} · ${p.year}</span>
         <span class="rc-open" aria-hidden="true">↗</span>
         <div class="rc-tag"><b>${p.title}</b><small>${pad(i + 1)} / ${pad(N)}</small></div>
       </div>
-      <div class="rc-reflect" aria-hidden="true"><img src="${p.images[0]}" alt="" draggable="false" loading="lazy"></div>`;
+      <div class="rc-reflect" aria-hidden="true"><img src="${p.cover}" alt="" draggable="false" loading="lazy"></div>`;
     ring.appendChild(c);
     const d = document.createElement('button');
     d.setAttribute('role', 'tab'); d.setAttribute('aria-label', p.title);
@@ -412,20 +412,53 @@
   layout();
   if (document.fonts) document.fonts.ready.then(layout);
 
-  /* ---------- Project sheet ---------- */
-  const sheet = $('#sheet'), panel = $('.sheet-panel'), gal = $('#shGallery');
+  /* ---------- Project viewer: info rail + justified mosaic + lightbox ---------- */
+  const sheet = $('#sheet'), panel = $('.sheet-panel'), rowsEl = $('#shRows');
   let sheetOpen = false, current = 0, lastFocus = null;
+  const DIM = {"projects/bravolt/01.jpg":1.776,"projects/bravolt/02.jpg":1.672,"projects/bravolt/03.jpg":1.776,"projects/bravolt/09.jpg":1.776,"projects/bravolt/11.jpg":1.333,"projects/bravolt/20.jpg":1.339,"projects/bravolt/23.jpg":1.136,"projects/bravolt/29.jpg":1.332,"projects/bravolt/35.jpg":1.646,"projects/caloi/angulo-conceitual.webp":1.729,"projects/caloi/detalhe-mural.webp":3.413,"projects/caloi/mural-aplicado.webp":1.73,"projects/convencao/04.jpg":1.776,"projects/convencao/05.jpg":1.471,"projects/convencao/06.jpg":1.487,"projects/convencao/07.jpg":1.468,"projects/convencao/09.jpg":1.471,"projects/feijao/corredor.webp":0.8,"projects/feijao/equipe.webp":1.6,"projects/feijao/fachada.webp":1.6,"projects/feijao/logo-amarelo-vermelho.webp":1.432,"projects/feijao/logo-colorida.webp":1.288,"projects/feijao/logo-vermelho-amarelo.webp":1.432,"projects/feijao/logo-vermelho-branco.webp":1.432,"projects/feijao/manga-longa.webp":0.832,"projects/parintins/01.jpg":1.79,"projects/parintins/02.jpg":0.753,"projects/parintins/03.jpg":0.783,"projects/parintins/05.jpg":1.333,"projects/parintins/06.jpg":1.333,"projects/parintins/09.jpg":1.79,"projects/parintins/10.jpg":1.483,"projects/parintins/11.jpg":1.483,"projects/parintins/12.jpg":1.468,"projects/verus/01.jpg":1.778,"projects/verus/07.jpg":1.778,"projects/verus/09.jpg":1.778,"projects/verus/19.jpg":1.778,"projects/verus/23.jpg":1.778,"projects/verus/24.jpg":1.778,"projects/verus/27.jpg":1.778,"projects/verus/33.jpg":1.778};
+  const arOf = src => DIM[src.slice(BASE.length)] || 1.6;
+  const buildRows = imgs => {
+    const small = innerWidth < 760;
+    const rows = []; let row = [], sum = 0;
+    // target = soma de proporções por linha: menor = imagens maiores
+    const target = () => small ? 1.5 : rows.length === 0 ? 1.5 : rows.length % 3 === 0 ? 1.7 : 3.1;
+    imgs.forEach((src, k) => {
+      const ar = arOf(src); row.push({ src, k, ar }); sum += ar;
+      if (sum >= target()) { rows.push({ row, sum, t: target() }); row = []; sum = 0; }
+    });
+    if (row.length) { const t = target(); rows.push({ row, sum, t, last: true }); }
+    return rows;
+  };
+  let rowsMode = null;
+  const renderRows = () => {
+    const p = projects[current];
+    rowsMode = innerWidth < 760;
+    rowsEl.innerHTML = buildRows(p.images).map(R =>
+      `<div class="vrow"${R.last && R.sum < R.t ? ` style="max-width:${Math.max(45, Math.min(100, R.sum / R.t * 100)).toFixed(1)}%"` : ''}>` +
+      R.row.map(it => `<button class="vfig" type="button" data-k="${it.k}" style="flex:${it.ar} 1 0;aspect-ratio:${it.ar};transition-delay:${(0.1 + Math.min(it.k, 8) * 0.05).toFixed(2)}s" aria-label="Ampliar imagem ${it.k + 1} de ${p.images.length}"><img src="${it.src}" alt="${p.title} — imagem ${it.k + 1}" loading="${it.k < 4 ? 'eager' : 'lazy'}" draggable="false"></button>`).join('') +
+      '</div>').join('');
+  };
+  rowsEl.addEventListener('load', e => { // imagens novas sem proporção cadastrada
+    const img = e.target, key = (img.getAttribute('src') || '').slice(BASE.length);
+    if (img.tagName !== 'IMG' || DIM[key] || !img.naturalHeight) return;
+    DIM[key] = +(img.naturalWidth / img.naturalHeight).toFixed(3); renderRows();
+  }, true);
+  rowsEl.addEventListener('click', e => { const f = e.target.closest('.vfig'); if (f) lbOpenAt(+f.dataset.k); });
+  addEventListener('resize', () => { if (sheetOpen && rowsMode !== (innerWidth < 760)) renderRows(); });
+
   const fill = i => {
     const p = projects[i]; current = i;
     $('#shNum').textContent = `${pad(i + 1)} / ${pad(N)}`;
     $('#shCat').textContent = p.category;
-    $('#shYear').textContent = p.year;
     $('#shTitle').textContent = p.title;
     $('#shStatement').textContent = p.statement;
     $('#shDesc').textContent = p.description;
-    $('#shRole').textContent = p.role;
-    gal.innerHTML = p.images.map((src, k) => `<figure style="transition-delay:${0.12 + k * 0.06}s"><img src="${src}" alt="${p.title} — imagem ${k + 1}" loading="${k < 3 ? 'eager' : 'lazy'}" draggable="false"></figure>`).join('');
-    gal.scrollLeft = 0; panel.scrollTop = 0; requestAnimationFrame(galUpdate);
+    $('#shRole').innerHTML = p.role.split(' · ').map(r => `<span>${r}</span>`).join('');
+    $('#shYear').textContent = p.year;
+    $('#shYearRow').hidden = !/^\d{4}$/.test(p.year);
+    $('#shCount').textContent = `${p.images.length} imagens`;
+    renderRows();
+    panel.scrollTop = 0;
     root.style.setProperty('--accent', p.accent);
   };
   function openSheet(i) {
@@ -448,83 +481,86 @@
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   };
   $$('[data-close]', sheet).forEach(b => b.addEventListener('click', closeSheet));
+  $('#sheetCta').addEventListener('click', () => closeSheet());
   const swapSheet = d => {
     const nx = mod(current + d, N);
-    panel.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-d * 40}px)` }], { duration: 220, easing: 'ease-in' }).onfinish = () => {
-      fill(nx);
-      panel.animate([{ opacity: 0, transform: `translateX(${d * 40}px)` }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' });
+    if (reduce) { fill(nx); return; }
+    panel.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease-in' }).onfinish = () => {
+      sheet.classList.remove('is-open'); fill(nx); void panel.offsetWidth;
+      sheet.classList.add('is-open');
+      panel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease-out' });
     };
   };
   $('#shPrev').addEventListener('click', () => swapSheet(-1));
   $('#shNext').addEventListener('click', () => swapSheet(1));
+
+  // lightbox
+  const lb = $('#lb'), lbImg = $('#lbImg'), lbCount = $('#lbCount');
+  let lbOpen = false, lbK = 0;
+  const lbShow = (k, d = 0) => {
+    const p = projects[current];
+    lbK = mod(k, p.images.length);
+    lbImg.src = p.images[lbK]; lbImg.alt = `${p.title} — imagem ${lbK + 1}`;
+    lbCount.textContent = `${p.title} · ${pad(lbK + 1)} / ${pad(p.images.length)}`;
+    if (!reduce) lbImg.animate([{ opacity: 0, transform: `translateX(${d * 40}px) scale(.98)` }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.22,1,.36,1)' });
+  };
+  function lbOpenAt(k) {
+    lb.hidden = false; lbOpen = true; lbShow(k);
+    requestAnimationFrame(() => lb.classList.add('is-open'));
+    $('#lbClose').focus({ preventScroll: true });
+  }
+  const lbClose = () => {
+    if (!lbOpen) return;
+    lbOpen = false; lb.classList.remove('is-open');
+    setTimeout(() => { if (!lbOpen) lb.hidden = true; }, 320);
+    const f = $(`.vfig[data-k="${lbK}"]`, rowsEl); if (f) f.focus({ preventScroll: true });
+  };
+  $('#lbClose').addEventListener('click', lbClose);
+  $('#lbPrev').addEventListener('click', () => lbShow(lbK - 1, -1));
+  $('#lbNext').addEventListener('click', () => lbShow(lbK + 1, 1));
+  let lbX = null;
+  lb.addEventListener('pointerdown', e => { lbX = e.clientX; });
+  lb.addEventListener('pointerup', e => {
+    if (lbX == null) return; const dx = e.clientX - lbX; lbX = null;
+    if (Math.abs(dx) > 50) lbShow(lbK + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    else if (e.target === lb) lbClose();
+  });
+
   addEventListener('keydown', e => {
+    if (lbOpen) {
+      if (e.key === 'Escape') lbClose();
+      else if (e.key === 'ArrowRight') lbShow(lbK + 1, 1);
+      else if (e.key === 'ArrowLeft') lbShow(lbK - 1, -1);
+      else if (e.key === 'Tab') {
+        const f = $$('button', lb); const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      return;
+    }
     if (!sheetOpen) return;
     if (e.key === 'Escape') closeSheet();
-    if (e.key === 'ArrowRight') { e.preventDefault(); galGo(1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); galGo(-1); }
-    if (e.key === 'Tab') { // focus trap
+    else if (e.key === 'ArrowRight') swapSheet(1);
+    else if (e.key === 'ArrowLeft') swapSheet(-1);
+    else if (e.key === 'Tab') {
       const f = $$('button, a[href]', panel); const first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
-  // drag-to-scroll gallery with mouse
-  let gx = 0, gl = 0, gd = false;
-  gal.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; gd = true; gx = e.clientX; gl = gal.scrollLeft; gal.style.scrollSnapType = 'none'; gal.style.cursor = 'grabbing'; });
-  addEventListener('pointermove', e => { if (gd) gal.scrollLeft = gl - (e.clientX - gx); });
-  addEventListener('pointerup', () => { if (!gd) return; gd = false; gal.style.scrollSnapType = ''; gal.style.cursor = ''; });
-  // swipe down on grabber to close (touch)
-  let ty = null;
-  panel.addEventListener('touchstart', e => { ty = panel.scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true });
-  panel.addEventListener('touchmove', e => {
-    if (ty == null) return; const dy = e.touches[0].clientY - ty;
-    if (dy > 0) { panel.style.transition = 'none'; panel.style.transform = `translateY(${dy * 0.8}px)`; }
-  }, { passive: true });
-  panel.addEventListener('touchend', e => {
-    if (ty == null) return; const dy = e.changedTouches[0].clientY - ty; ty = null;
-    panel.style.transition = ''; panel.style.transform = '';
-    if (dy > 120) closeSheet();
-  });
-
-  /* ---------- Sheet gallery: buttons + counter ---------- */
-  const galPrev = $('#galPrev'), galNext = $('#galNext'), galCount = $('#galCount');
-  const galLefts = () => {
-    const g = gal.getBoundingClientRect().left, pad = parseFloat(getComputedStyle(gal).paddingLeft) || 0;
-    return [...gal.children].map(f => f.getBoundingClientRect().left - g + gal.scrollLeft - pad);
-  };
-  const galNearest = L => L.reduce((b, l, i) => Math.abs(l - gal.scrollLeft) < Math.abs(L[b] - gal.scrollLeft) ? i : b, 0);
-  function galUpdate() {
-    const L = galLefts(); if (!L.length) return;
-    const max = gal.scrollWidth - gal.clientWidth;
-    const atEnd = gal.scrollLeft >= max - 2;
-    galCount.textContent = `${pad(atEnd ? L.length : galNearest(L) + 1)} / ${pad(L.length)}`;
-    galPrev.disabled = gal.scrollLeft <= 2; galNext.disabled = atEnd;
-  }
-  function galGo(d) {
-    const L = galLefts(); if (!L.length) return;
-    const max = gal.scrollWidth - gal.clientWidth;
-    const nx = Math.max(0, Math.min(L.length - 1, galNearest(L) + d));
-    gal.scrollTo({ left: Math.min(max, L[nx]), behavior: reduce ? 'auto' : 'smooth' });
-  }
-  galPrev.addEventListener('click', () => galGo(-1));
-  galNext.addEventListener('click', () => galGo(1));
-  gal.addEventListener('scroll', galUpdate, { passive: true });
-  gal.addEventListener('load', galUpdate, true);
-  addEventListener('resize', galUpdate);
-  $('#sheetCta').addEventListener('click', () => closeSheet());
 
   /* ---------- Journey: 3D timeline (line + dots) ---------- */
   {
     // Troque `img` pelas fotos de cada época (ex.: assets/timeline/2015.jpg). As atuais são provisórias.
     const TL = [
-      { from: 2015, to: 2018, period: '2015 — 2018', role: 'Designer Gráfico Jr', company: 'Rebool Camisaria', img: `${BASE}projects/caloi/angulo-conceitual.webp` },
-      { from: 2019, to: 2019, period: '2019', role: 'Designer Gráfico', company: 'Seven Graf', img: `${BASE}projects/verus/09.jpg` },
-      { from: 2020, to: 2024, period: '2020 — 2024', role: 'Designer Gráfico Pleno / Social Media', company: 'Rebool Camisaria', img: `${BASE}projects/bravolt/03.jpg` },
-      { from: 2025, to: null, period: '2025 — agora', role: 'Designer Gráfico Pleno', company: 'Rodrigues Colchões', img: `${BASE}projects/convencao/06.jpg` },
+      { from: 2015, to: 2018, period: '2015 — 2018', role: 'Designer Gráfico Jr', company: 'Rebool Camisaria', desc: 'Artes para camisetas personalizadas, mídias digitais, impressas e peças gráficas.', img: `${BASE}projects/caloi/angulo-conceitual.webp` },
+      { from: 2019, to: 2019, period: '2019', role: 'Designer Gráfico', company: 'Seven Graf', desc: 'Materiais para comunicação visual, mídias digitais e impressas, com atendimento ao cliente.', img: `${BASE}projects/verus/09.jpg` },
+      { from: 2020, to: 2024, period: '2020 — 2024', role: 'Designer Gráfico Pleno / Social Media', company: 'Rebool Camisaria', desc: 'Campanhas, branding e criativos para tráfego pago. Supervisão de marketing e social media.', img: `${BASE}projects/bravolt/03.jpg` },
+      { from: 2025, to: null, period: '2025 — agora', role: 'Designer Sênior', company: 'Rodrigues Colchões', desc: 'Direção e criação de campanhas para varejo, mídias digitais, e-commerce e comunicação visual.', also: ['Diretor de Arte · Vibeup Marketing · 2025 — agora', 'Designer Gráfico · Vanguarda Martech · abr — out 2026'], img: `${BASE}projects/convencao/06.jpg` },
     ];
     const Y0 = 2015, Y1 = 2026, NY = Y1 - Y0 + 1, STEP_T = 10;
     const stageT = $('#tlStage'), ringT = $('#tlRing'), ghost = $('#tlGhost');
-    const el = { period: $('#tlPeriod'), step: $('#tlStep'), role: $('#tlRole'), company: $('#tlCompany') };
+    const el = { period: $('#tlPeriod'), step: $('#tlStep'), role: $('#tlRole'), company: $('#tlCompany'), desc: $('#tlDesc'), also: $('#tlAlso') };
     const jobOf = i => TL.findIndex(j => Y0 + i >= j.from && Y0 + i <= (j.to || Y1));
     const bgs = TL.map(j => { const b = document.createElement('i'); b.style.backgroundImage = `url("${j.img}")`; $('#tlBg').appendChild(b); return b; });
     const nodes = Array.from({ length: NY }, (_, i) => {
@@ -547,7 +583,8 @@
       stageT.setAttribute('aria-valuetext', `${Y0 + i}: ${TL[j].role}, ${TL[j].company}`);
       if (j === job) return; job = j;
       el.period.textContent = TL[j].period; el.step.textContent = `${pad(j + 1)} / ${pad(TL.length)}`;
-      el.role.textContent = TL[j].role; el.company.textContent = TL[j].company;
+      el.role.textContent = TL[j].role; el.company.textContent = TL[j].company; el.desc.textContent = TL[j].desc;
+      el.also.innerHTML = (TL[j].also || []).map(a => `<li>${a}</li>`).join(''); el.also.hidden = !TL[j].also;
       [el.role, el.company, el.period.parentElement].forEach(x => { x.classList.remove('swap'); void x.offsetWidth; x.classList.add('swap'); });
       bgs.forEach((b, k) => b.classList.toggle('on', k === j));
     };
