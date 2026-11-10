@@ -535,6 +535,29 @@ h2{font-size:clamp(40px,6.4vw,96px)}
 .plans-grid{padding-top:28px}
 .plans-foot{padding-bottom:4px}
 
+/* ---------- v8: hero with portrait — word behind the subject ---------- */
+.hero{display:block;padding:0;min-height:100svh;height:100svh;max-height:1200px}
+.hero::after{z-index:4;background:linear-gradient(180deg,transparent 58%,rgba(3,8,7,.82) 86%,var(--ink) 100%)}
+.hero-stage{position:absolute;z-index:0;left:50%;bottom:0;translate:-50.5% 0;width:min(max(100vw,calc(82svh * 1.792)),calc(94svh * 1.792));aspect-ratio:2000/1116;pointer-events:none}
+.hero-stage img{position:absolute;inset:0;width:100%;height:100%;max-width:none;will-change:transform,opacity;transform-origin:50% 60%}
+.hs-bg{-webkit-mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 14%);-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 14%);mask-composite:intersect}
+.space{z-index:1}
+.hero-word{position:absolute;z-index:2;left:0;right:0;top:9.5svh;margin:0;text-align:center;pointer-events:none}
+.hero-word .big{font-size:clamp(96px,19vw,300px);overflow:visible;padding:0}
+.hero-word .word-rise{will-change:translate,opacity;text-shadow:none}
+.hs-front{z-index:3}
+.hs-cut{animation:cutIn 1.4s var(--ease) both}
+@keyframes cutIn{from{opacity:0;translate:0 30px}}
+.hero-center{position:absolute;z-index:5;left:0;right:0;bottom:clamp(26px,5svh,56px);max-width:none;padding-inline:var(--gutter) var(--gutter-r);gap:0}
+.badge{padding:8px 18px 8px 16px;margin-bottom:16px;gap:12px}
+.badge .live{margin:0}
+.hero-tagline{margin:0 0 22px;font-size:clamp(20px,2.6vw,38px);letter-spacing:-.03em;line-height:1.1;color:var(--paper)}
+@media (max-width:760px){
+  .hero-word{top:16svh}
+  .hero-word .big{font-size:25.5vw}
+  .hero-stage{width:calc(74svh * 1.792);translate:-51.5% 0}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
   html{scroll-behavior:auto}

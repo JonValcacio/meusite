@@ -8,9 +8,10 @@
 <meta property="og:title" content="Jonatas Valcácio — Portfólio">
 <meta property="og:description" content="Designer gráfico e diretor de arte em Manaus. Branding, campanhas, experiências de marca e design ambiental.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/projects/verus/01.jpg">
+<meta property="og:image" content="assets/profile/hero.jpg">
 <meta name="theme-color" content="#030807">
 <link rel="icon" href="assets/favicon.svg">
+<link rel="preload" href="assets/profile/hero.jpg" as="image">
 <link rel="preload" href="assets/fonts/Demo-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <script>document.documentElement.classList.add('js')</script>
@@ -47,34 +48,29 @@
 <main id="top">
   <!-- HERO: floating work in 3D space -->
   <section class="hero" id="hero">
+    <div class="hero-stage" aria-hidden="true"><img class="hs-bg" id="hsBg" src="assets/profile/hero.jpg" alt="" width="2000" height="1116"></div>
     <div class="space" id="space" aria-hidden="true"></div>
+    <h1 class="hero-title hero-word" id="heroTitle" aria-label="Portfólio de Jonatas Valcácio"><span class="line big"><em class="word-rise" id="heroWord">Portfólio</em></span></h1>
+    <div class="hero-stage hs-front"><img class="hs-cut" id="hsCut" src="assets/profile/hero-cut.webp" alt="Jonatas Valcácio de braços cruzados" width="2000" height="1116"></div>
 
     <div class="hero-center">
       <a class="badge glass" href="#sobre">
-        <img src="assets/profile/jonatas.webp" alt="" width="64" height="64">
-        <span><b>Jonatas Valcácio</b><small>Designer sênior · Diretor de arte</small></span>
         <i class="live" title="Disponível para projetos"></i>
+        <span><b>Jonatas Valcácio</b><small>Designer sênior · Diretor de arte</small></span>
       </a>
-      <h1 class="hero-title" id="heroTitle" aria-label="Portfólio. Direção de arte que vira experiência.">
-        <span class="line big"><em class="word-rise">Portfólio</em></span>
-        <span class="line small"><span data-split>direção de arte que vira experiência.</span></span>
-      </h1>
-      <p class="hero-sub reveal">Identidades, campanhas e espaços com 10 anos de repertório.</p>
+      <p class="hero-tagline reveal">direção de arte que vira experiência.</p>
       <div class="hero-actions reveal">
         <a class="btn btn-primary magnetic" href="#projetos">Ver projetos <span>↓</span></a>
         <a class="btn glass magnetic" href="#contato">Vamos conversar</a>
       </div>
     </div>
-
-    <div class="lens" id="lens" aria-hidden="true"><div class="lens-inner" id="lensInner"></div></div>
-    <p class="hero-foot" aria-hidden="true"><span>Portfólio · 2026</span><span class="scroll-line"></span><span>Role para explorar</span></p>
   </section>
 
   <!-- MANIFESTO: scroll-scrubbed text -->
   <section class="manifesto" id="sobre">
     <div class="manifesto-sticky shell">
       <figure class="mini-portrait glass tilt reveal">
-        <img src="assets/profile/jonatas.webp" alt="Jonatas Valcácio" width="1600" height="1505">
+        <img src="assets/profile/jonatas-retrato.jpg" alt="Jonatas Valcácio" width="800" height="1000">
         <figcaption><b>Jonatas Valcácio</b><span>29 anos · Manaus, AM</span></figcaption>
         <span class="shine" aria-hidden="true"></span>
       </figure>

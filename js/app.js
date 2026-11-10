@@ -101,11 +101,12 @@
 
   /* ---------- HERO: work floating in 3D space ---------- */
   const hero = $('#hero'), space = $('#space'), heroCenter = $('.hero-center');
+  const hsBg = $('#hsBg'), hsCut = $('#hsCut'), heroWord = $('#heroWord');
   const world = document.createElement('div'); world.className = 'space-world'; space.appendChild(world);
-  const T = [ // [projectIndex, imageIndex, fx, fy, z, w]
-    [0, 0, -0.36, -0.27, -150, 300], [1, 0, 0.35, -0.29, -300, 320], [2, 0, -0.40, 0.27, -80, 290], [3, 0, 0.39, 0.29, -120, 300],
-    [4, 0, -0.13, -0.40, -700, 270], [5, 0, 0.15, 0.41, -650, 290], [0, 3, -0.31, 0.01, -950, 300], [2, 3, 0.31, 0.0, -1000, 320],
-    [1, 2, 0.02, -0.37, -1350, 280], [3, 5, -0.04, 0.39, -1250, 270], [4, 3, -0.49, -0.04, -480, 240], [5, 1, 0.50, -0.07, -560, 250],
+  const T = [ // [projectIndex, imageIndex, fx, fy, z, w] — nas laterais, deixando o centro livre para a foto
+    [0, 0, -0.43, -0.34, -150, 250], [1, 0, 0.43, -0.35, -300, 260], [2, 0, -0.41, 0.24, -80, 270], [3, 0, 0.40, 0.26, -120, 280],
+    [4, 0, -0.33, 0.43, -900, 250], [5, 0, 0.34, 0.44, -850, 260], [0, 3, -0.30, 0.04, -950, 280], [2, 3, 0.31, 0.05, -1000, 300],
+    [1, 2, -0.24, 0.40, -1250, 260], [3, 5, 0.25, 0.41, -1250, 250], [4, 3, -0.49, -0.04, -480, 230], [5, 1, 0.50, -0.05, -560, 240],
   ];
   const tiles = T.map(([pi, ii, fx, fy, z, w], k) => {
     const p = projects[pi];
@@ -142,6 +143,11 @@
       t.el.style.visibility = op < 0.01 ? 'hidden' : 'visible';
     }
     const q = Math.min(1, chp * 1.7);
+    const pt = `translate3d(${(cmx * 14).toFixed(1)}px,${(cmy * 8).toFixed(1)}px,0) scale(${(1 + chp * 0.1).toFixed(4)})`;
+    hsBg.style.transform = pt; hsCut.style.transform = pt;
+    heroWord.style.translate = `${(cmx * -34).toFixed(1)}px ${(cmy * -12 - chp * 120).toFixed(1)}px`;
+    hsBg.style.opacity = hsCut.style.opacity = (1 - Math.min(1, chp * 1.4)).toFixed(3);
+    heroWord.style.opacity = (1 - Math.min(1, chp * 1.6)).toFixed(3);
     heroCenter.style.opacity = (1 - q).toFixed(3);
     heroCenter.style.transform = `translateY(${(-q * 60).toFixed(1)}px) scale(${(1 - q * 0.08).toFixed(4)})`;
     heroCenter.style.filter = q > 0.01 ? `blur(${(q * 10).toFixed(1)}px)` : '';
@@ -158,34 +164,6 @@
   }, { passive: true });
   addEventListener('resize', () => { layoutTiles(); heroKick(); });
   layoutTiles(); heroKick();
-
-  /* ---------- Glass lens over hero (desktop) ---------- */
-  const lens = $('#lens'), lensInner = $('#lensInner');
-  if (matchMedia('(hover:hover)').matches && !reduce) {
-    const clone = heroCenter.cloneNode(true);
-    clone.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
-    clone.querySelector('.hero-title').classList.add('is-in');
-    lensInner.appendChild(clone);
-    const R = 110, S = 1.45;
-    let lx = 0, ly = 0, tx = 0, ty = 0, lensRaf = 0, inHero = false;
-    const sizeInner = () => { lensInner.style.width = hero.offsetWidth + 'px'; lensInner.style.height = hero.offsetHeight + 'px'; };
-    const lensFrame = () => {
-      lx += (tx - lx) * 0.18; ly += (ty - ly) * 0.18;
-      lens.style.transform = `translate(${(lx - R).toFixed(1)}px,${(ly - R).toFixed(1)}px)`;
-      lensInner.style.transform = `translate(${(R - lx * S).toFixed(1)}px,${(R - ly * S).toFixed(1)}px) scale(${S})`;
-      clone.style.opacity = heroCenter.style.opacity;
-      lens.style.opacity = inHero && (+heroCenter.style.opacity || 1) > 0.5 ? '' : '0';
-      if (Math.abs(tx - lx) > 0.2 || Math.abs(ty - ly) > 0.2) lensRaf = requestAnimationFrame(lensFrame); else lensRaf = 0;
-    };
-    hero.addEventListener('pointermove', e => {
-      const r = hero.getBoundingClientRect();
-      tx = e.clientX - r.left; ty = e.clientY - r.top;
-      if (!inHero) { inHero = true; lx = tx; ly = ty; sizeInner(); lens.classList.add('is-on'); }
-      if (!lensRaf) lensRaf = requestAnimationFrame(lensFrame);
-    });
-    hero.addEventListener('pointerleave', () => { inHero = false; lens.classList.remove('is-on'); });
-    addEventListener('resize', sizeInner);
-  }
 
   /* ---------- Manifesto scroll-scrub ---------- */
   const scrubEl = $('#scrub'), manifesto = $('#sobre');
