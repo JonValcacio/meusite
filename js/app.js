@@ -52,7 +52,7 @@
       [...wd].forEach(ch => {
         const s = document.createElement('span');
         s.className = 'char'; s.textContent = ch;
-        s.style.transitionDelay = (0.1 + (charN++) * 0.03) + 's';
+        s.style.transitionDelay = (0.5 + (charN++) * 0.022) + 's';
         w.appendChild(s);
       });
       el.appendChild(w);
@@ -221,11 +221,11 @@
     pill.style.opacity = 1; pill.style.width = a.offsetWidth + 'px';
     pill.style.transform = `translateX(${a.offsetLeft}px)`;
   };
-  const sections = ['hero', 'sobre', 'projetos', 'arquivo', 'perfil', 'contato'].map(id => document.getElementById(id));
+  const sections = ['hero', 'sobre', 'projetos', 'arquivo', 'trajetoria', 'perfil', 'contato'].map(id => document.getElementById(id));
   const sio = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      let id = e.target.id; if (id === 'arquivo') id = 'projetos';
+      let id = e.target.id; if (id === 'arquivo' || id === 'trajetoria') id = 'perfil';
       navLinks.forEach(a => a.classList.toggle('is-active', a.dataset.nav === id));
       movePill(navLinks.find(a => a.dataset.nav === id));
     });
@@ -239,7 +239,7 @@
       el.addEventListener('pointermove', e => {
         const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        const m = el.classList.contains('portrait') ? 9 : 4;
+        const m = el.classList.contains('mini-portrait') ? 14 : el.classList.contains('card') ? 4 : 9;
         el.style.setProperty('--ry', ((x - .5) * m).toFixed(2) + 'deg');
         el.style.setProperty('--rx', ((.5 - y) * m).toFixed(2) + 'deg');
         el.style.setProperty('--mx', (x * 100) + '%');
@@ -425,7 +425,7 @@
     $('#shDesc').textContent = p.description;
     $('#shRole').textContent = p.role;
     gal.innerHTML = p.images.map((src, k) => `<figure style="transition-delay:${0.12 + k * 0.06}s"><img src="${src}" alt="${p.title} — imagem ${k + 1}" loading="${k < 3 ? 'eager' : 'lazy'}" draggable="false"></figure>`).join('');
-    gal.scrollLeft = 0; panel.scrollTop = 0;
+    gal.scrollLeft = 0; panel.scrollTop = 0; requestAnimationFrame(galUpdate);
     root.style.setProperty('--accent', p.accent);
   };
   function openSheet(i) {
@@ -460,8 +460,8 @@
   addEventListener('keydown', e => {
     if (!sheetOpen) return;
     if (e.key === 'Escape') closeSheet();
-    if (e.key === 'ArrowRight' && !e.target.closest('.sheet-gallery')) swapSheet(1);
-    if (e.key === 'ArrowLeft' && !e.target.closest('.sheet-gallery')) swapSheet(-1);
+    if (e.key === 'ArrowRight') { e.preventDefault(); galGo(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); galGo(-1); }
     if (e.key === 'Tab') { // focus trap
       const f = $$('button, a[href]', panel); const first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -485,6 +485,151 @@
     panel.style.transition = ''; panel.style.transform = '';
     if (dy > 120) closeSheet();
   });
+
+  /* ---------- Sheet gallery: buttons + counter ---------- */
+  const galPrev = $('#galPrev'), galNext = $('#galNext'), galCount = $('#galCount');
+  const galLefts = () => {
+    const g = gal.getBoundingClientRect().left, pad = parseFloat(getComputedStyle(gal).paddingLeft) || 0;
+    return [...gal.children].map(f => f.getBoundingClientRect().left - g + gal.scrollLeft - pad);
+  };
+  const galNearest = L => L.reduce((b, l, i) => Math.abs(l - gal.scrollLeft) < Math.abs(L[b] - gal.scrollLeft) ? i : b, 0);
+  function galUpdate() {
+    const L = galLefts(); if (!L.length) return;
+    const max = gal.scrollWidth - gal.clientWidth;
+    const atEnd = gal.scrollLeft >= max - 2;
+    galCount.textContent = `${pad(atEnd ? L.length : galNearest(L) + 1)} / ${pad(L.length)}`;
+    galPrev.disabled = gal.scrollLeft <= 2; galNext.disabled = atEnd;
+  }
+  function galGo(d) {
+    const L = galLefts(); if (!L.length) return;
+    const max = gal.scrollWidth - gal.clientWidth;
+    const nx = Math.max(0, Math.min(L.length - 1, galNearest(L) + d));
+    gal.scrollTo({ left: Math.min(max, L[nx]), behavior: reduce ? 'auto' : 'smooth' });
+  }
+  galPrev.addEventListener('click', () => galGo(-1));
+  galNext.addEventListener('click', () => galGo(1));
+  gal.addEventListener('scroll', galUpdate, { passive: true });
+  gal.addEventListener('load', galUpdate, true);
+  addEventListener('resize', galUpdate);
+  $('#sheetCta').addEventListener('click', () => closeSheet());
+
+  /* ---------- Journey: 3D timeline (line + dots) ---------- */
+  {
+    // Troque `img` pelas fotos de cada época (ex.: assets/timeline/2015.jpg). As atuais são provisórias.
+    const TL = [
+      { from: 2015, to: 2018, period: '2015 — 2018', role: 'Designer Gráfico Jr', company: 'Rebool Camisaria', img: `${BASE}projects/caloi/angulo-conceitual.webp` },
+      { from: 2019, to: 2019, period: '2019', role: 'Designer Gráfico', company: 'Seven Graf', img: `${BASE}projects/verus/09.jpg` },
+      { from: 2020, to: 2024, period: '2020 — 2024', role: 'Designer Gráfico Pleno / Social Media', company: 'Rebool Camisaria', img: `${BASE}projects/bravolt/03.jpg` },
+      { from: 2025, to: null, period: '2025 — agora', role: 'Designer Gráfico Pleno', company: 'Rodrigues Colchões', img: `${BASE}projects/convencao/06.jpg` },
+    ];
+    const Y0 = 2015, Y1 = 2026, NY = Y1 - Y0 + 1, STEP_T = 10;
+    const stageT = $('#tlStage'), ringT = $('#tlRing'), ghost = $('#tlGhost');
+    const el = { period: $('#tlPeriod'), step: $('#tlStep'), role: $('#tlRole'), company: $('#tlCompany') };
+    const jobOf = i => TL.findIndex(j => Y0 + i >= j.from && Y0 + i <= (j.to || Y1));
+    const bgs = TL.map(j => { const b = document.createElement('i'); b.style.backgroundImage = `url("${j.img}")`; $('#tlBg').appendChild(b); return b; });
+    const nodes = Array.from({ length: NY }, (_, i) => {
+      const n = document.createElement('div');
+      n.className = 'tl-node' + (TL.some(j => j.from === Y0 + i) ? ' is-major' : '');
+      n.dataset.i = i;
+      n.innerHTML = `<span class="tl-seg"></span><span class="tl-dot"></span><span class="tl-year">${Y0 + i}</span>`;
+      ringT.appendChild(n);
+      return n;
+    });
+
+    let p = 2025 - Y0, v = 0, tg = p, Rt = 900, nw = 150, sel = -1, job = -1, rafT = 0, drag = false;
+    const clamp = x => Math.max(0, Math.min(NY - 1, x));
+    const select = i => {
+      sel = i;
+      const j = jobOf(i);
+      nodes.forEach((n, k) => { n.classList.toggle('is-sel', k === i); n.classList.toggle('in-range', jobOf(k) === j); });
+      ghost.textContent = Y0 + i;
+      stageT.setAttribute('aria-valuenow', Y0 + i);
+      stageT.setAttribute('aria-valuetext', `${Y0 + i}: ${TL[j].role}, ${TL[j].company}`);
+      if (j === job) return; job = j;
+      el.period.textContent = TL[j].period; el.step.textContent = `${pad(j + 1)} / ${pad(TL.length)}`;
+      el.role.textContent = TL[j].role; el.company.textContent = TL[j].company;
+      [el.role, el.company, el.period.parentElement].forEach(x => { x.classList.remove('swap'); void x.offsetWidth; x.classList.add('swap'); });
+      bgs.forEach((b, k) => b.classList.toggle('on', k === j));
+    };
+    const draw = () => {
+      for (let i = 0; i < NY; i++) {
+        const rel = i - p, a = Math.abs(rel);
+        nodes[i].style.transform = `rotateY(${(rel * STEP_T).toFixed(3)}deg) translateZ(${Rt.toFixed(1)}px)`;
+        nodes[i].style.opacity = (a < 3 ? 1 : Math.max(0, 1 - (a - 3) / 3)).toFixed(3);
+        nodes[i].style.pointerEvents = a > 5.5 ? 'none' : 'auto';
+      }
+      const s = clamp(Math.round(p));
+      if (s !== sel) select(s);
+    };
+    const tick = () => {
+      if (!drag) {
+        if (reduce) { p = tg; v = 0; }
+        else { v += (tg - p) * 0.08; v *= 0.72; p += v; }
+      }
+      draw();
+      if (drag || Math.abs(tg - p) > 0.0005 || Math.abs(v) > 0.0005) rafT = requestAnimationFrame(tick);
+      else { p = tg; draw(); rafT = 0; }
+    };
+    const go = () => { if (!rafT) rafT = requestAnimationFrame(tick); };
+    const to = i => { tg = clamp(i); go(); };
+    const size = () => {
+      nw = nodes[0].offsetWidth || 150;
+      Rt = nw / (2 * Math.tan(STEP_T * Math.PI / 360));
+      ringT.style.transform = `translateZ(${(-Rt).toFixed(1)}px)`;
+      draw();
+    };
+
+    let x0 = 0, y0 = 0, p0 = 0, lx = 0, lt = 0, mv = 0, hit = null, ax = null, id = null;
+    stageT.addEventListener('pointerdown', e => {
+      if (e.button !== 0) return;
+      id = e.pointerId; x0 = lx = e.clientX; y0 = e.clientY; lt = performance.now();
+      p0 = p; mv = 0; v = 0; ax = e.pointerType === 'mouse' ? 'x' : null;
+      hit = e.target.closest('.tl-node'); drag = true; tg = p; go();
+    });
+    addEventListener('pointermove', e => {
+      if (!drag || e.pointerId !== id) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      if (!ax) { if (Math.hypot(dx, dy) < 6) return; ax = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'; if (ax === 'y') { drag = false; to(Math.round(p)); return; } }
+      mv = Math.max(mv, Math.abs(dx));
+      if (mv > 4) stageT.classList.add('is-dragging');
+      const now = performance.now();
+      v = -((e.clientX - lx) / nw) / Math.max(1, now - lt) * 16;
+      lx = e.clientX; lt = now;
+      p = Math.max(-0.4, Math.min(NY - 0.6, p0 - dx / nw));
+    }, { passive: true });
+    const up = e => {
+      if (!drag || (e && e.pointerId !== id)) return;
+      drag = false; stageT.classList.remove('is-dragging');
+      if (mv < 6 && hit) to(+hit.dataset.i); else to(Math.round(p + v * 8));
+      v = 0;
+    };
+    addEventListener('pointerup', up);
+    addEventListener('pointercancel', up);
+    let wt = 0;
+    stageT.addEventListener('wheel', e => {
+      const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+      if (!dx) return;
+      e.preventDefault(); drag = true; p = Math.max(-0.4, Math.min(NY - 0.6, p + dx / (nw * 1.5))); go();
+      clearTimeout(wt); wt = setTimeout(() => { drag = false; to(Math.round(p)); }, 140);
+    }, { passive: false });
+    stageT.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); to(Math.round(tg) + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); to(Math.round(tg) - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); to(0); }
+      else if (e.key === 'End') { e.preventDefault(); to(NY - 1); }
+    });
+    // buttons jump between career stages
+    $('#tlPrev').addEventListener('click', () => {
+      const cur = Math.round(tg), j = jobOf(cur), start = TL[j].from - Y0;
+      to(cur > start ? start : j > 0 ? TL[j - 1].from - Y0 : 0);
+    });
+    $('#tlNext').addEventListener('click', () => {
+      const j = jobOf(Math.round(tg));
+      to(j < TL.length - 1 ? TL[j + 1].from - Y0 : NY - 1);
+    });
+    addEventListener('resize', size);
+    size();
+  }
 
   /* ---------- Copy e-mail ---------- */
   const toast = $('#toast'); let tt = 0;

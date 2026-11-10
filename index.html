@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Jonatas Valcácio — VALK</title>
+<title>Jonatas Valcácio — Portfólio</title>
 <meta name="description" content="Jonatas Valcácio, designer gráfico e diretor de arte em Manaus. Branding, campanhas, experiências de marca e design ambiental.">
+<meta property="og:title" content="Jonatas Valcácio — Portfólio">
+<meta property="og:description" content="Designer gráfico e diretor de arte em Manaus. Branding, campanhas, experiências de marca e design ambiental.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/projects/verus/01.jpg">
 <meta name="theme-color" content="#030807">
 <link rel="icon" href="assets/favicon.svg">
 <link rel="preload" href="assets/fonts/Demo-Light.otf" as="font" type="font/otf" crossorigin>
@@ -51,9 +55,9 @@
         <span><b>Jonatas Valcácio</b><small>Designer gráfico · Manaus</small></span>
         <i class="live" title="Disponível para projetos"></i>
       </a>
-      <h1 class="hero-title" id="heroTitle" aria-label="Direção de arte que vira experiência.">
-        <span class="line"><span data-split>Direção de arte</span></span>
-        <span class="line"><span data-split>que vira</span> <em class="word-rise">experiência.</em></span>
+      <h1 class="hero-title" id="heroTitle" aria-label="Portfólio. Direção de arte que vira experiência.">
+        <span class="line big"><em class="word-rise">Portfólio</em></span>
+        <span class="line small"><span data-split>direção de arte que vira experiência.</span></span>
       </h1>
       <p class="hero-sub reveal">Identidades, campanhas e espaços com 10 anos de repertório.</p>
       <div class="hero-actions reveal">
@@ -69,9 +73,10 @@
   <!-- MANIFESTO: scroll-scrubbed text -->
   <section class="manifesto" id="sobre">
     <div class="manifesto-sticky shell">
-      <figure class="mini-portrait glass reveal">
+      <figure class="mini-portrait glass tilt reveal">
         <img src="assets/profile/jonatas.webp" alt="Jonatas Valcácio" width="1600" height="1505">
         <figcaption><b>Jonatas Valcácio</b><span>29 anos · Manaus, AM</span></figcaption>
+        <span class="shine" aria-hidden="true"></span>
       </figure>
       <p class="scrub" id="scrub">Há dez anos eu transformo ideias em sistemas visuais. Identidades, campanhas e experiências construídas com clareza, repertório e impacto, do conceito à última aplicação.</p>
       <ul class="facts">
@@ -108,7 +113,7 @@
     <p class="drag-hint" aria-hidden="true"><span>⟵</span> clique e arraste <span>⟶</span></p>
   </section>
 
-  <!-- ARCHIVE -->
+  <!-- ARCHIVE + SERVICES -->
   <section class="archive" id="arquivo">
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
@@ -116,13 +121,50 @@
         <span>Social media</span><i>✦</i><span>Campanhas de varejo</span><i>✦</i><span>Manipulação de imagem</span><i>✦</i><span>Motion design</span><i>✦</i><span>Modelagem 3D</span><i>✦</i><span>Produção com IA</span><i>✦</i>
       </div>
     </div>
-    <div class="shell archive-copy reveal">
-      <p class="eyebrow">Além dos cases</p>
-      <p class="archive-lede">Frentes que também fazem parte do meu repertório e do dia a dia criativo: social media, varejo, manipulação de imagem, motion, 3D e produção com IA.</p>
+    <div class="shell services" id="servicos">
+      <div class="section-head reveal">
+        <p class="eyebrow">Como posso ajudar</p>
+        <h2>Do conceito<br><em>à última aplicação.</em></h2>
+      </div>
+      <ul class="svc-grid">
+        <li class="svc glass tilt reveal"><h3>Identidade &amp; Branding</h3><p>Marcas com símbolo, sistema visual e aplicações prontas para ganhar escala.</p><small>Verus · Bravolt · Feijão Autoposto</small><span class="shine" aria-hidden="true"></span></li>
+        <li class="svc glass tilt reveal"><h3>Campanhas &amp; Varejo</h3><p>Conceito, key visual e desdobramentos para campanhas 360º e ações de varejo.</p><small>Parintins · Convenção Rodrigues</small><span class="shine" aria-hidden="true"></span></li>
+        <li class="svc glass tilt reveal"><h3>Design ambiental</h3><p>Murais, sinalização e ambientação que traduzem a cultura da marca no espaço.</p><small>Caloi</small><span class="shine" aria-hidden="true"></span></li>
+        <li class="svc glass tilt reveal"><h3>Social media</h3><p>Linguagem e peças para manter a marca consistente no dia a dia das redes.</p><small>Conteúdo recorrente</small><span class="shine" aria-hidden="true"></span></li>
+        <li class="svc glass tilt reveal"><h3>Motion &amp; 3D</h3><p>Animação, modelagem 3D e manipulação de imagem para dar vida às peças.</p><small>After Effects · Cinema 4D</small><span class="shine" aria-hidden="true"></span></li>
+        <li class="svc glass tilt reveal"><h3>Produção com IA</h3><p>Imagens e mockups conceituais para visualizar a ideia antes de produzir.</p><small>Conceito rápido</small><span class="shine" aria-hidden="true"></span></li>
+      </ul>
+      <p class="svc-cta reveal"><a class="btn btn-primary magnetic" href="#contato">Pedir um orçamento <span>↗</span></a><a class="btn glass magnetic" href="#projetos">Ver os cases</a></p>
     </div>
   </section>
 
-  <!-- PROFILE BENTO -->
+  <!-- JOURNEY: 3D timeline -->
+  <section class="journey" id="trajetoria">
+    <div class="journey-bg" id="tlBg" aria-hidden="true"></div>
+    <div class="shell section-head reveal">
+      <p class="eyebrow">Trajetória</p>
+      <h2>Uma carreira,<br><em>ano a ano.</em></h2>
+    </div>
+    <div class="tl-wrap">
+      <div class="tl-ghost" id="tlGhost" aria-hidden="true">2025</div>
+      <div class="tl-stage" id="tlStage" tabindex="0" role="slider" aria-label="Linha do tempo da trajetória. Use as setas para mudar o ano." aria-valuemin="2015" aria-valuemax="2026" aria-valuenow="2025">
+        <div class="tl-needle" aria-hidden="true"></div>
+        <div class="tl-ring" id="tlRing"></div>
+      </div>
+    </div>
+    <div class="shell tl-hud">
+      <button class="round glass" id="tlPrev" aria-label="Etapa anterior">←</button>
+      <article class="tl-card glass" aria-live="polite">
+        <p class="tl-meta"><span id="tlPeriod">2025 — agora</span><span id="tlStep">04 / 04</span></p>
+        <h3 id="tlRole">Designer Gráfico Pleno</h3>
+        <p id="tlCompany">Rodrigues Colchões</p>
+      </article>
+      <button class="round glass" id="tlNext" aria-label="Próxima etapa">→</button>
+    </div>
+    <p class="drag-hint" aria-hidden="true"><span>⟵</span> arraste ou clique em um ano <span>⟶</span></p>
+  </section>
+
+  <!-- PROFILE -->
   <section class="profile shell" id="perfil">
     <div class="section-head reveal">
       <p class="eyebrow">Perfil profissional</p>
@@ -130,17 +172,6 @@
     </div>
 
     <div class="bento">
-      <article class="card glass tilt reveal b-timeline">
-        <h3 class="card-label">Trajetória</h3>
-        <ol class="timeline">
-          <li><time>2025 — agora</time><b>Designer Gráfico Pleno</b><span>Rodrigues Colchões</span></li>
-          <li><time>2020 — 2024</time><b>Designer Gráfico Pleno / Social Media</b><span>Rebool Camisaria</span></li>
-          <li><time>2019</time><b>Designer Gráfico</b><span>Seven Graf</span></li>
-          <li><time>2015 — 2018</time><b>Designer Gráfico Jr</b><span>Rebool Camisaria</span></li>
-        </ol>
-        <span class="shine" aria-hidden="true"></span>
-      </article>
-
       <article class="card glass tilt reveal b-tools">
         <h3 class="card-label">Ferramentas</h3>
         <ul class="tools">
@@ -162,15 +193,18 @@
         </ul>
         <span class="shine" aria-hidden="true"></span>
       </article>
+    </div>
 
-      <article class="card glass tilt reveal b-edu">
-        <h3 class="card-label">Formação &amp; estudos</h3>
-        <p class="edu-main">Design Gráfico <small>Ensino Superior · Uninorte</small></p>
-        <ul class="edu-list">
-          <li>UX/UI Design</li><li>Modelagem 3D</li><li>Relações Humanas e Sinergia</li><li>Excelência no Atendimento</li><li>Inglês Intermediário</li>
-        </ul>
-        <span class="shine" aria-hidden="true"></span>
-      </article>
+    <div class="edu">
+      <h3 class="card-label reveal">Formação &amp; estudos</h3>
+      <ul class="edu-grid">
+        <li class="edu-tile glass tilt reveal is-main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg><div><b>Design Gráfico</b><span>Ensino Superior · Uninorte</span></div><span class="shine" aria-hidden="true"></span></li>
+        <li class="edu-tile glass tilt reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M9 9v11"/></svg><div><b>UX/UI Design</b><span>Estudo complementar</span></div><span class="shine" aria-hidden="true"></span></li>
+        <li class="edu-tile glass tilt reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg><div><b>Modelagem 3D</b><span>Estudo complementar</span></div><span class="shine" aria-hidden="true"></span></li>
+        <li class="edu-tile glass tilt reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14.2c2.8.2 4.8 2.2 4.8 5.3"/></svg><div><b>Relações Humanas e Sinergia</b><span>Estudo complementar</span></div><span class="shine" aria-hidden="true"></span></li>
+        <li class="edu-tile glass tilt reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="2.5" y="13" width="4" height="6" rx="2"/><rect x="17.5" y="13" width="4" height="6" rx="2"/><path d="M19.5 19c0 2-2 3-5 3"/></svg><div><b>Excelência no Atendimento</b><span>Estudo complementar</span></div><span class="shine" aria-hidden="true"></span></li>
+        <li class="edu-tile glass tilt reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg><div><b>Inglês</b><span>Intermediário</span></div><span class="shine" aria-hidden="true"></span></li>
+      </ul>
     </div>
   </section>
 
@@ -180,16 +214,17 @@
     <div class="shell contact-inner">
       <p class="eyebrow reveal">Contato &amp; disponibilidade</p>
       <h2 class="contact-title reveal">Vamos criar<br><em>algo juntos?</em></h2>
+      <p class="contact-sub reveal">Para marcas que precisam de design e para times que procuram um designer.</p>
       <button class="mail-pill glass magnetic reveal" id="copyEmail" type="button" aria-label="Copiar e-mail valcaciodesign@gmail.com">
         <span>valcaciodesign@gmail.com</span><i>Copiar</i>
       </button>
       <div class="contact-links reveal">
+        <a class="glass is-wa" href="https://wa.me/5592981756627?text=Ol%C3%A1%2C%20Jonatas!%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener">WhatsApp <span>↗</span></a>
+        <a class="glass" href="mailto:valcaciodesign@gmail.com?subject=Oportunidade%20de%20trabalho">Tenho uma vaga <span>↗</span></a>
         <a class="glass" href="https://www.behance.net/jonatasvalccio" target="_blank" rel="noopener">Behance <span>↗</span></a>
         <a class="glass" href="https://www.instagram.com/valk.designer" target="_blank" rel="noopener">Instagram <span>↗</span></a>
         <a class="glass" href="tel:+5592981756627">+55 92 98175-6627</a>
-        <a class="glass" href="mailto:valcaciodesign@gmail.com">E-mail <span>↗</span></a>
       </div>
-    </div>
     <footer class="footer shell">
       <span>VALK · Jonatas Valcácio</span>
       <span>Portfólio 2026</span>
@@ -209,11 +244,17 @@
       <h2 id="shTitle"></h2>
       <p class="sheet-statement" id="shStatement"></p>
     </header>
-    <div class="sheet-gallery" id="shGallery"></div>
+    <div class="sheet-gallery-wrap">
+      <button class="round glass gal-btn gal-prev" id="galPrev" aria-label="Imagem anterior">←</button>
+      <div class="sheet-gallery" id="shGallery"></div>
+      <button class="round glass gal-btn gal-next" id="galNext" aria-label="Próxima imagem">→</button>
+      <p class="gal-count" id="galCount" aria-live="polite">1 / 1</p>
+    </div>
     <div class="sheet-body">
       <p id="shDesc"></p>
       <dl><dt>Escopo</dt><dd id="shRole"></dd></dl>
     </div>
+    <div class="sheet-cta glass"><p>Quer algo nesse nível para a sua marca?</p><a class="btn btn-primary" href="#contato" id="sheetCta">Vamos conversar <span>↗</span></a></div>
     <nav class="sheet-nav">
       <button class="btn glass" id="shPrev">← Anterior</button>
       <button class="btn glass" id="shNext">Próximo →</button>
